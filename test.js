@@ -37,7 +37,7 @@ class Ball {
     }
 }
 
-let ball = new Ball(30, 30, 0, 0.5);
+let ball = new Ball(30, 30, 0, 0.3);
 
 createElem(ball);
 
@@ -48,10 +48,17 @@ function draw(ball) {
 
     elem.attr('r', radius + speed);
 
-    ball.setRadius(radius + speed);
+    ball.setRadius(Math.round((radius + speed) * 1000) / 1000);
 
-    if (ball.getRadius() >= 30 || ball.getRadius() <= 0) {
+    if (ball.getRadius() <= 0) {
+        ball.setRadius(0);
+        $('circle').remove();
         ball.changeSpeedDiractions();
+    }
+
+    if (ball.getRadius() >= 30) {
+        ball.changeSpeedDiractions();
+        ball.setRadius(30);
     }
 }
 
